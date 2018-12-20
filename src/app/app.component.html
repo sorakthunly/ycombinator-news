@@ -1,20 +1,83 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- Application header -->
+<mat-toolbar color="primary">
+  <div class="container">
+    <span>Y Combinator News</span>
+  </div>
+</mat-toolbar>
 
+<!-- Application body -->
+<div class="container">  
+  <!-- News search area -->
+  <div class="search-section">
+    <div class="d-flex align-items-center py-3">
+      <mat-form-field class="w-100">
+        <input [ngModel]="searchText" (ngModelChange)="searchNewsItems($event)" name="searchText" matInput type="text" placeholder="Search news here...">
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <!-- If there are no searched news items, display recent news items -->
+  <ng-template [ngIf]="!searchedNewsItems">
+    <!-- Heading of the body -->
+    <h2 class="mb-4">Recent News</h2>
+    
+    <!-- Top pagination section -->
+    <div *ngIf="newsItems" class="pagination-section mb-3">
+      <app-pagination [newsItems]="newsItems" (onNext)="nextRecentNewsPage($event)" (onPrevious)="prevRecentNewsPage($event)"></app-pagination>
+    </div>
+
+    <!-- Body of the news stories -->
+    <div class="news-section">
+      <ng-template [ngIf]="!newsItems">
+        <div class="d-flex justify-content-center py-4">
+          <mat-spinner [diameter]="50"></mat-spinner>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="newsItems">
+        <app-news-snapshot *ngFor="let newsItem of newsItems.hits" [newsItem]="newsItem"></app-news-snapshot>
+      </ng-template>
+    </div>
+
+    <!-- Bottom pagination section -->
+    <div *ngIf="newsItems" class="pagination-section mb-3">
+      <app-pagination [newsItems]="newsItems" (onNext)="nextRecentNewsPage($event)" (onPrevious)="prevRecentNewsPage($event)"></app-pagination>
+    </div>
+  </ng-template>
+  
+  <!-- Display searched news items if there are any -->
+  <ng-template [ngIf]="searchedNewsItems">
+    <!-- Heading of the body -->
+    <h2 class="mb-4">Search Results for "{{ searchText }}"</h2>
+    
+    <!-- Top pagination section -->
+    <div *ngIf="searchedNewsItems" class="pagination-section mb-3">
+      <app-pagination [newsItems]="searchedNewsItems" (onNext)="nextSearchedNewsPage($event)" (onPrevious)="prevSearchedNewsPage($event)"></app-pagination>
+    </div>
+
+    <!-- Body of the news stories -->
+    <div class="news-section">
+      <ng-template [ngIf]="!searchedNewsItems">
+        <div class="d-flex justify-content-center py-4">
+          <mat-spinner [diameter]="50"></mat-spinner>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="searchedNewsItems">
+        <app-news-snapshot *ngFor="let newsItem of searchedNewsItems.hits" [newsItem]="newsItem"></app-news-snapshot>
+      </ng-template>
+    </div>
+
+    <!-- Bottom pagination section -->
+    <div *ngIf="searchedNewsItems" class="pagination-section mb-3">
+      <app-pagination [newsItems]="searchedNewsItems" (onNext)="nextSearchedNewsPage($event)" (onPrevious)="prevSearchedNewsPage($event)"></app-pagination>
+    </div>
+  </ng-template>
+</div>
+
+<!-- An overlay screen to indicate that the application is fetching data -->
+<div *ngIf="isLoading" class="overlay">
+  <div class="d-flex h-100 align-items-center justify-content-center">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</div>
+
+<button *ngIf="pageNotTop" mat-raised-button class="scroll-to-top medium-curve" (click)="scrollToTop()">Back to Top</button>

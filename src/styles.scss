@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+:focus {
+  outline: 0 !important;
+}
+
+.p-break {
+  word-break: break-all;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.medium-curve {
+  border-radius: 1.5em !important;
+}

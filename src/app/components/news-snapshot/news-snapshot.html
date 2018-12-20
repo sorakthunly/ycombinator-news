@@ -1,0 +1,11 @@
+<h5>{{ newsItem.story_title || newsItem.title }}</h5>
+<p><a [href]="newsItem.story_url || newsItem.url" class="p-break">{{ newsItem.story_url || newsItem.url }}</a></p>
+<p [innerHtml]="newsItem.comment_text" class="p-break"></p> <!-- Comment could be a HTML string -->
+<div class="story-detail">
+  <p class="text-muted">{{ newsItem.created_at | fromNow }} by {{ newsItem.author }}</p>
+  <div>
+    <span class="text-muted">{{ newsItem.points || 0 }} points</span> |
+    <span class="text-muted">{{ newsItem.num_comments || 0 }} comments</span>
+  </div>
+</div>
+<hr>

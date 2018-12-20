@@ -1,0 +1,5 @@
+<p class="mb-0">Showing {{ newsItems.hitsPerPage }} results | page {{ newsItems.page + 1 }} of {{ newsItems.nbPages + 1 }}</p>
+<div class="d-flex py-3 align-items-center justify-content-start">
+  <button [disabled]="newsItems.page === 0" mat-raised-button color="primary" (click)="previous($event)">Previous</button>
+  <button [disabled]="newsItems.page === newsItems.nbPages" class="ml-auto" mat-raised-button color="primary" (click)="next($event)">Next</button>
+</div>
