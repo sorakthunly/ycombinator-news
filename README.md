@@ -1,6 +1,12 @@
+![image](https://user-images.githubusercontent.com/19909685/50291168-8a769980-04b9-11e9-818e-ff5bfbfe1285.png)
+
 # YcombinatorNews
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+
+## Live Server
+
+Visit https://ycombinator-news.firebaseapp.com/ to view the app currently hosted with Firebase.
 
 ## Development server
 
