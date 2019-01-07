@@ -11,6 +11,9 @@ import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  /** Title of the component */
+  title = 'Y Combinator News';
+
   /** List of recent news */
   newsItems: any;
 
